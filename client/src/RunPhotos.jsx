@@ -4,7 +4,7 @@ export default function RunPhotos({place,booking}){
             {place.photos?.[0] && (
               <img
                 className="rounded-2xl object-cover aspect-square"
-                src={`/public/${place.photos[0]}`}
+                src={`../public/${place.photos[0]}`}
                 alt={place.title}
               />
             )}

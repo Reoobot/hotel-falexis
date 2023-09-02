@@ -7,7 +7,7 @@ export default function RunGallery({ place}) {
           <img
             key={index}
             className="rounded-2xl object-cover aspect-square "
-            src={`/public/${photo}`}
+            src={`../public/${photo}`}
             alt={`${place.title} - Photo ${index + 1}`}
           />
         ))}
