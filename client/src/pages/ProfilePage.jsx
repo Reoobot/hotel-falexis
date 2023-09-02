@@ -1,0 +1,49 @@
+import { useContext, useState } from "react"
+import { UserContext } from "../UserContext"
+import { useNavigate, useParams } from "react-router-dom"
+import axios from 'axios'
+import PlacesPage from "./PlacesPage"
+import AccountNav from "../AccountNav"
+
+export default function ProfilePage() {
+    const navigate = useNavigate();
+    const [redirect,setRedirect] = useState(null);
+    const {ready,user,setUser} = useContext(UserContext)
+    let {subpage} = useParams();
+    if (subpage === undefined) {
+        subpage = 'profile';
+    }
+   
+
+    async function logout() {
+        await axios.get("https://booking-sand-two.vercel.app/api/user-places");
+        setRedirect('/')
+        setUser(null);
+       
+    }
+
+    if(!ready) {
+        return 'Loadin...'
+    }
+ 
+    if (redirect) {
+        console.log('Antes de navigate', redirect);
+        navigate(redirect);
+        console.log('Después de navigate', redirect);
+        return null;
+    }
+    return (
+        <div>
+            <AccountNav/>
+            {subpage === 'profile' && (
+                <div className="text-center max-w-lg mx-auto">
+                    Logged in as {user.name} ({user.email})<br/>
+                    <button onClick={logout} className="primary max-w-sm mt-2">Logout</button>
+                </div>
+            )}
+            {subpage === 'places' && (
+                <PlacesPage/>
+            )}
+        </div>
+    )
+}
